@@ -1,5 +1,8 @@
 <NotepadPlus>
     <Project name="cpp-object-library">
         <File name="main.cpp" />
+        <File name="StringTemplate.h" />
+        <File name="StringTemplateHelper.h" />
+        <File name="StringTemplateCat.h" />
     </Project>
 </NotepadPlus>
