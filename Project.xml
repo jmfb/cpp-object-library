@@ -4,5 +4,10 @@
         <File name="StringTemplate.h" />
         <File name="StringTemplateHelper.h" />
         <File name="StringTemplateCat.h" />
+        <File name="TypeInfoHelper.h" />
+        <File name="Entity.h" />
+        <File name="Property.h" />
+        <File name="EntityInstance.h" />
+        <File name="IndexByName.h" />
     </Project>
 </NotepadPlus>
