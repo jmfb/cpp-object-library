@@ -9,5 +9,9 @@
         <File name="Property.h" />
         <File name="EntityInstance.h" />
         <File name="IndexByName.h" />
+        <File name="Object.h" />
+        <File name="Object.cpp" />
+        <File name="String.cpp" />
+        <File name="String.h" />
     </Project>
 </NotepadPlus>
