@@ -37,13 +37,6 @@ public:
 };
 
 template <unsigned long TLength, char... TChars>
-class StringTemplateCat<StringTemplate<1, '\0'>, StringTemplate<TLength, TChars...>>
-{
-public:
-	typedef StringTemplate<TLength, TChars...> Type;
-};
-
-template <unsigned long TLength, char... TChars>
 class StringTemplateCat<StringTemplate<TLength, TChars...>>
 {
 public:

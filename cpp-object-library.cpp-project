@@ -1,0 +1,66 @@
+<Project name="cpp-object-library">
+	<Settings>
+		<Standard>c++11</Standard>
+		<Subsystem>console</Subsystem>
+		<Warnings>all</Warnings>
+		<WarningsAsErrors>True</WarningsAsErrors>
+		<OptimizationLevel>4</OptimizationLevel>
+		<DebugInfo>False</DebugInfo>
+		<Multithreaded>False</Multithreaded>
+		<OutputFolder>output</OutputFolder>
+		<OutputFileName>{ProjectName}.exe</OutputFileName>
+		<IncludeDirectories>
+			<IncludeDirectory>c:\save\code\</IncludeDirectory>
+		</IncludeDirectories>
+		<Libraries/>
+	</Settings>
+	<Files>
+		<Folder name="String Template">
+			<File>StringTemplateHelper.h</File>
+			<File>StringTemplate.h</File>
+			<File>StringTemplateCat.h</File>
+		</Folder>
+		<Folder name="Metadata">
+			<File>TypeInfoHelper.h</File>
+			<File>Property.h</File>
+			<File>IndexByName.h</File>
+			<File>Entity.h</File>
+			<File>EntityInstance.h</File>
+		</Folder>
+		<Folder name="Object Hierarchy">
+			<File>Object.h</File>
+			<File>Object.cpp</File>
+			<File>String.h</File>
+			<File>String.cpp</File>
+			<File>SingleEndedCollection.h</File>
+			<File>FrontEndedCollection.h</File>
+			<File>EndedCollection.h</File>
+			<File>DoubleEndedCollection.h</File>
+			<File>BackEndedCollection.h</File>
+			<File>Container.h</File>
+		</Folder>
+		<Folder name="Linq Wrappers">
+			<File>Enumerator.h</File>
+			<File>Enumerator.inl</File>
+			<File>RepeatEnumerator.inl</File>
+			<File>RangeEnumerator.inl</File>
+			<File>IteratorEnumerator.inl</File>
+			<File>WhereEnumerator.inl</File>
+			<File>SelectEnumerator.inl</File>
+			<File>SelectManyEnumerator.inl</File>
+			<File>SkipEnumerator.inl</File>
+			<File>SkipWhileEnumerator.inl</File>
+			<File>TakeEnumerator.inl</File>
+			<File>TakeWhileEnumerator.inl</File>
+			<File>ConcatEnumerator.inl</File>
+			<File>StaticCastEnumerator.inl</File>
+			<File>ZipEnumerator.inl</File>
+			<Folder name="Tests">
+				<File>Enumerator.Test.cpp</File>
+			</Folder>
+		</Folder>
+		<File>main.cpp</File>
+		<File>main.Test.cpp</File>
+	</Files>
+</Project>
+

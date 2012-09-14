@@ -3,27 +3,20 @@
 template <char... TChars>
 class StringTemplateHelper
 {
+public:
+	static const bool valid = false;
 };
 
 template <char TChar, char... TRest>
 class StringTemplateHelper<TChar, TRest...>
 {
 public:
-	template <typename TIter>
-	static void SetNextChar(TIter iter)
-	{
-		*iter = TChar;
-		StringTemplateHelper<TRest...>::SetNextChar(iter + 1);
-	}
+	static const bool valid = TChar != '\0' && StringTemplateHelper<TRest...>::valid;
 };
 
-template <>
-class StringTemplateHelper<>
+template <char TChar>
+class StringTemplateHelper<TChar>
 {
 public:
-	template <typename TIter>
-	static void SetNextChar(TIter iter)
-	{
-		//nothing
-	}
+	static const bool valid = TChar == '\0';
 };

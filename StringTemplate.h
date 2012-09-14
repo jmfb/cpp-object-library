@@ -1,36 +1,18 @@
 #pragma once
-#include <array>
-#include <algorithm>
 #include "StringTemplateHelper.h"
 
 template <unsigned long TLength, char... TChars>
 class StringTemplate
 {
 public:
+	static_assert(sizeof...(TChars) > 1, "Empty string template is not allowed.");
 	static_assert(TLength == sizeof...(TChars), "String length mismatch.");
-	
-	enum { Length = TLength };
-	typedef std::array<char, Length> ArrayType;
-	
-	static const char* Get()
-	{
-		return mData.data();
-	}
-
-private:
-	static ArrayType CreateArray()
-	{
-		ArrayType value;
-		StringTemplateHelper<TChars...>::SetNextChar(value.begin());
-		return value;
-	}
-	
-private:
-	static ArrayType mData;
+	static_assert(StringTemplateHelper<TChars...>::valid, "String template must end in a null terminator.");
+	static const char value[sizeof...(TChars)];
 };
 
 template <unsigned long TLength, char... TChars>
-typename StringTemplate<TLength, TChars...>::ArrayType StringTemplate<TLength, TChars...>::mData = StringTemplate<TLength, TChars...>::CreateArray();
+const char StringTemplate<TLength, TChars...>::value[sizeof...(TChars)] = { TChars... };
 
 #define STRING_TEMPLATE_0(s) s[0]
 #define STRING_TEMPLATE_1(s) STRING_TEMPLATE_0(s), s[1]
@@ -133,4 +115,3 @@ typename StringTemplate<TLength, TChars...>::ArrayType StringTemplate<TLength, T
 #define STRING_TEMPLATE_98(s) STRING_TEMPLATE_97(s), s[98]
 #define STRING_TEMPLATE_99(s) STRING_TEMPLATE_98(s), s[99]
 #define STRING_TEMPLATE(s, count) StringTemplate<sizeof(s) / sizeof(s[0]), STRING_TEMPLATE_##count(s)>
-#define _ST(s, count) STRING_TEMPLATE(s, count)

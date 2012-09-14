@@ -12,11 +12,11 @@ namespace ObjectLibrary
 	public:
 		String();
 		String(const String& rhs);
-		String(const char* value);
+		String(const char* const value);
 		virtual ~String();
 		
 		String& operator=(const String& rhs);
-		String& operator=(const char* value);
+		String& operator=(const char* const value);
 		
 		virtual const std::type_info& GetType() const;
 		virtual String ToString() const;
@@ -25,7 +25,7 @@ namespace ObjectLibrary
 		
 	private:
 		struct Data;
-		Data* mData;
+		Data* data;
 	};
 }
 

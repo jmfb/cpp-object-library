@@ -14,31 +14,31 @@ namespace ObjectLibrary
 	};
 	
 	String::String()
-		: mData(new Data())
+		: data(new Data())
 	{
 	}
 	String::String(const String& rhs)
-		: mData(new Data(rhs.mData->value))
+		: data(new Data(rhs.data->value))
 	{
 	}
-	String::String(const char* value)
-		: mData(new Data(value))
+	String::String(const char* const value)
+		: data(new Data(value))
 	{
 	}
 	String::~String()
 	{
-		delete mData;
+		delete data;
 	}
 	
 	String& String::operator=(const String& rhs)
 	{
 		if (this != &rhs)
-			mData->value = rhs.mData->value;
+			data->value = rhs.data->value;
 		return *this;
 	}
-	String& String::operator=(const char* value)
+	String& String::operator=(const char* const value)
 	{
-		mData->value = value;
+		data->value = value;
 		return *this;
 	}
 
@@ -53,7 +53,7 @@ namespace ObjectLibrary
 	
 	const char* String::GetData() const
 	{
-		return mData->value.c_str();
+		return data->value.c_str();
 	}
 }
 

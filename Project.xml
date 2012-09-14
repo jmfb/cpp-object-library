@@ -13,5 +13,11 @@
         <File name="Object.cpp" />
         <File name="String.cpp" />
         <File name="String.h" />
+        <File name="BackEndedCollection.h" />
+        <File name="Container.h" />
+        <File name="DoubleEndedCollection.h" />
+        <File name="FrontEndedCollection.h" />
+        <File name="SingleEndedCollection.h" />
+        <File name="EndedCollection.h" />
     </Project>
 </NotepadPlus>
