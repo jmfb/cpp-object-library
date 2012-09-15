@@ -17,38 +17,38 @@ namespace Linq
 		typedef RepeatEnumerator<T> ThisType;
 		typedef T ValueType;
 		typedef Enumerator<ValueType> InterfaceType;
-		typedef unsigned long SizeType;
-	
+		typedef std::size_t SizeType;
+
 		RepeatEnumerator(ValueType value, SizeType count)
 			: value(value), count(count), index(0)
 		{
 		}
-	
+
 		bool MoveFirst() override
 		{
 			index = 0;
 			return index < count;
 		}
-		
+
 		bool MoveNext() override
 		{
 			++index;
 			return index < count;
 		}
-		
+
 		ValueType GetCurrent() const override
 		{
 			return value;
 		}
-	
+
 	private:
 		ValueType value;
 		SizeType count;
 		SizeType index;
 	};
-	
+
 	template <typename T>
-	inline RepeatEnumerator<T> Repeat(T value, unsigned long count)
+	inline RepeatEnumerator<T> Repeat(T value, std::size_t count)
 	{
 		return { value, count };
 	}

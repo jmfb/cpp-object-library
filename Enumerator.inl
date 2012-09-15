@@ -144,7 +144,7 @@ namespace Linq
 			return def;
 		for (;;)
 		{
-			auto last= GetCurrent();
+			auto last = GetCurrent();
 			if (!MoveNext())
 				return last;
 		}
@@ -165,9 +165,9 @@ namespace Linq
 	}
 
 	template <typename T>
-	inline T Enumerator<T>::ElementAt(unsigned long position)
+	inline T Enumerator<T>::ElementAt(std::size_t position)
 	{
-		auto count = 0ul;
+		auto count = 0ull;
 		for (auto b = MoveFirst(); b; b = MoveNext())
 			if (count++ == position)
 				return GetCurrent();
@@ -175,15 +175,15 @@ namespace Linq
 	}
 
 	template <typename T>
-	inline T Enumerator<T>::ElementAtOrDefault(unsigned long position)
+	inline T Enumerator<T>::ElementAtOrDefault(std::size_t position)
 	{
 		return ElementAtOrDefault(position, T());
 	}
 
 	template <typename T>
-	inline T Enumerator<T>::ElementAtOrDefault(unsigned long position, T def)
+	inline T Enumerator<T>::ElementAtOrDefault(std::size_t position, T def)
 	{
-		auto count = 0ul;
+		auto count = 0ull;
 		for (auto b = MoveFirst(); b; b = MoveNext())
 			if (count++ == position)
 				return GetCurrent();
@@ -199,9 +199,9 @@ namespace Linq
 	}
 
 	template <typename T>
-	inline unsigned long Enumerator<T>::Count()
+	inline std::size_t Enumerator<T>::Count()
 	{
-		auto result = 0ul;
+		auto result = 0ull;
 		ForEach([&result](T value){ ++result; });
 		return result;
 	}
@@ -211,14 +211,14 @@ namespace Linq
 	{
 		if (!MoveFirst())
 			RaiseEmpty();
-		auto count = 1ul;
+		auto count = 1ull;
 		auto result = GetCurrent();
 		while (MoveNext())
 		{
 			++count;
 			result += GetCurrent();
 		}
-		return result / T{ count };
+		return result / static_cast<T>(count);
 	}
 
 	template <typename T>
@@ -260,109 +260,117 @@ namespace Linq
 	}
 
 	template <typename T>
-	inline std::list<T> Enumerator<T>::ToList()
+	inline std::list<typename CoreType<T>::Type> Enumerator<T>::ToList()
 	{
-		std::list<T> result;
+		std::list<typename CoreType<T>::Type> result;
 		ForEach([&result](T value){ result.push_back(value); });
 		return result;
 	}
 
 	template <typename T>
-	inline std::vector<T> Enumerator<T>::ToVector()
+	inline std::vector<typename CoreType<T>::Type> Enumerator<T>::ToVector()
 	{
-		std::vector<T> result;
+		std::vector<typename CoreType<T>::Type> result;
 		ForEach([&result](T value){ result.push_back(value); });
 		return result;
 	}
 
 	template <typename T>
-	inline std::set<T> Enumerator<T>::ToSet()
+	inline std::set<typename CoreType<T>::Type> Enumerator<T>::ToSet()
 	{
-		std::set<T> result;
+		std::set<typename CoreType<T>::Type> result;
 		ForEach([&result](T value){ result.insert(value); });
 		return result;
 	}
 
 	template <typename T>
-	inline std::multiset<T> Enumerator<T>::ToMultiset()
+	inline std::multiset<typename CoreType<T>::Type> Enumerator<T>::ToMultiset()
 	{
-		std::multiset<T> result;
+		std::multiset<typename CoreType<T>::Type> result;
 		ForEach([&result](T value){ result.insert(value); });
 		return result;
 	}
 
 	template <typename T>
-	inline std::unordered_set<T> Enumerator<T>::ToUnorderedSet()
+	inline std::unordered_set<typename CoreType<T>::Type> Enumerator<T>::ToUnorderedSet()
 	{
-		std::unordered_set<T> result;
+		std::unordered_set<typename CoreType<T>::Type> result;
 		ForEach([&result](T value){ result.insert(value); });
 		return result;
 	}
 
 	template <typename T>
-	inline std::unordered_multiset<T> Enumerator<T>::ToUnorderedMultiset()
+	inline std::unordered_multiset<typename CoreType<T>::Type> Enumerator<T>::ToUnorderedMultiset()
 	{
-		std::unordered_multiset<T> result;
+		std::unordered_multiset<typename CoreType<T>::Type> result;
 		ForEach([&result](T value){ result.insert(value); });
 		return result;
 	}
 
 	template <typename T>
-	inline std::deque<T> Enumerator<T>::ToDeque()
+	inline std::deque<typename CoreType<T>::Type> Enumerator<T>::ToDeque()
 	{
-		std::deque<T> result;
+		std::deque<typename CoreType<T>::Type> result;
 		ForEach([&result](T value){ result.push_back(value); });
 		return result;
 	}
 
 	template <typename T>
-	inline std::stack<T> Enumerator<T>::ToStack()
+	inline std::stack<typename CoreType<T>::Type> Enumerator<T>::ToStack()
 	{
-		std::stack<T> result;
+		std::stack<typename CoreType<T>::Type> result;
 		ForEach([&result](T value){ result.push(value); });
 		return result;
 	}
 
 	template <typename T>
-	inline std::queue<T> Enumerator<T>::ToQueue()
+	inline std::queue<typename CoreType<T>::Type> Enumerator<T>::ToQueue()
 	{
-		std::queue<T> result;
+		std::queue<typename CoreType<T>::Type> result;
 		ForEach([&result](T value){ result.push(value); });
 		return result;
 	}
 
 	template <typename T>
-	template <typename TFunc>
-	inline std::map<decltype(std::declval<TFunc>()(std::declval<T>())), T> Enumerator<T>::ToMap(TFunc func)
+	inline std::basic_string<typename CoreType<T>::Type> Enumerator<T>::ToString()
 	{
-		std::map<decltype(std::declval<TFunc>()(std::declval<T>())), T> result;
+		std::basic_string<typename CoreType<T>::Type> result;
+		ForEach([&result](T value){ result.push_back(value); });
+		return result;
+	}
+
+	template <typename T>
+	template <typename TFunc>
+	inline std::map<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> Enumerator<T>::ToMap(TFunc func)
+	{
+		std::map<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> result;
 		ForEach([&result, &func](T value){ result.insert({ func(value), value }); });
 		return result;
 	}
 
 	template <typename T>
 	template <typename TFunc>
-	inline std::multimap<decltype(std::declval<TFunc>()(std::declval<T>())), T> Enumerator<T>::ToMultimap(TFunc func)
+	inline std::multimap<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> Enumerator<T>::ToMultimap(TFunc func)
 	{
-		std::multimap<decltype(std::declval<TFunc>()(std::declval<T>())), T> result;
+		std::multimap<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> result;
 		ForEach([&result, &func](T value){ result.insert({ func(value), value }); });
 		return result;
 	}
 
 	template <typename T>
 	template <typename TFunc>
-	inline std::unordered_map<decltype(std::declval<TFunc>()(std::declval<T>())), T> Enumerator<T>::ToUnorderedMap(TFunc func)
+	inline std::unordered_map<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> Enumerator<T>::ToUnorderedMap(TFunc func)
 	{
-		std::unordered_map<decltype(std::declval<TFunc>()(std::declval<T>())), T> result;
+		std::unordered_map<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> result;
 		ForEach([&result, &func](T value){ result.insert({ func(value), value }); });
 		return result;
 	}
 
 	template <typename T>
 	template <typename TFunc>
-	inline std::unordered_multimap<decltype(std::declval<TFunc>()(std::declval<T>())), T> Enumerator<T>::ToUnorderedMultimap(TFunc func)
+	inline std::unordered_multimap<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> Enumerator<T>::ToUnorderedMultimap(TFunc func)
 	{
-		std::unordered_multimap<decltype(std::declval<TFunc>()(std::declval<T>())), T> result;
+		std::unordered_multimap<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> result;
 		ForEach([&result, &func](T value){ result.insert({ func(value), value }); });
 		return result;
 	}

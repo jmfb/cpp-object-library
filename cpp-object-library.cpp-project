@@ -57,6 +57,19 @@
 			<File>ZipEnumerator.inl</File>
 			<Folder name="Tests">
 				<File>Enumerator.Test.cpp</File>
+				<File>RepeatEnumerator.Test.cpp</File>
+				<File>RangeEnumerator.Test.cpp</File>
+				<File>IteratorEnumerator.Test.cpp</File>
+				<File>WhereEnumerator.Test.cpp</File>
+				<File>SelectEnumerator.Test.cpp</File>
+				<File>SelectManyEnumerator.Test.cpp</File>
+				<File>SkipEnumerator.Test.cpp</File>
+				<File>SkipWhileEnumerator.Test.cpp</File>
+				<File>TakeEnumerator.Test.cpp</File>
+				<File>TakeWhileEnumerator.Test.cpp</File>
+				<File>ConcatEnumerator.Test.cpp</File>
+				<File>StaticCastEnumerator.Test.cpp</File>
+				<File>ZipEnumerator.Test.cpp</File>
 			</Folder>
 		</Folder>
 		<File>main.cpp</File>

@@ -21,6 +21,7 @@
 #include <stdexcept>
 #include <iterator>
 #include <memory>
+#include <string>
 
 namespace Linq
 {
@@ -34,10 +35,17 @@ namespace Linq
 	template <typename T, typename TEnum> class ConcatEnumerator;
 	template <typename T, typename TCast> class StaticCastEnumerator;
 	template <typename T, typename TFunc> class SelectManyEnumerator;
-	template <typename T, typename TSecond, typename TFunc> class ZipEnumerator;
+	template <typename T, template <typename> class TEnumerator, typename TSecond, typename TFunc> class ZipEnumerator;
 	template <typename T> class IteratorEnumerator;
 	template <typename T> class RangeEnumerator;
 	template <typename T> class RepeatEnumerator;
+
+	template <typename T>
+	class CoreType
+	{
+	public:
+		typedef typename std::remove_const<typename std::remove_reference<T>::type>::type Type;
+	};
 
 	template <typename T>
 	class Enumerator
@@ -82,20 +90,20 @@ namespace Linq
 		template <typename TFunc> T LastOrDefault(TFunc func, T def);
 
 		//ElementAt, ElementAtOrDefault
-		T ElementAt(unsigned long position);
-		T ElementAtOrDefault(unsigned long position);
-		T ElementAtOrDefault(unsigned long position, T def);
+		T ElementAt(std::size_t position);
+		T ElementAtOrDefault(std::size_t position);
+		T ElementAtOrDefault(std::size_t position, T def);
 
 		//Select, SelectMany
 		template <typename TFunc> SelectEnumerator<T, TFunc> Select(TFunc func);
 		template <typename TFunc> SelectManyEnumerator<T, TFunc> SelectMany(TFunc func);
 
 		//Skip, SkipWhile
-		SkipEnumerator<T> Skip(unsigned long count);
+		SkipEnumerator<T> Skip(std::size_t count);
 		template <typename TFunc> SkipWhileEnumerator<T, TFunc> SkipWhile(TFunc func);
 
 		//Take, TakeWhile
-		TakeEnumerator<T> Take(unsigned long count);
+		TakeEnumerator<T> Take(std::size_t count);
 		template <typename TFunc> TakeWhileEnumerator<T, TFunc> TakeWhile(TFunc func);
 
 		//Concat
@@ -106,7 +114,7 @@ namespace Linq
 
 		//Sum, Count, Average, Aggregate, Min, Max
 		T Sum();
-		unsigned long Count();
+		std::size_t Count();
 		T Average();
 		template <typename TFunc> T Aggregate(TFunc func);
 		template <typename TFunc> T Min(TFunc func);
@@ -115,31 +123,33 @@ namespace Linq
 		T Max();
 
 		//Zip
-		template <typename TSecond> ZipEnumerator<T, TSecond, std::pair<T, TSecond>(T, TSecond)> Zip(Enumerator<TSecond>& second);
-		template <typename TSecond, typename TFunc> ZipEnumerator<T, TSecond, TFunc> Zip(Enumerator<TSecond>& second, TFunc transform);
+		template <template <typename> class TEnumerator, typename TSecond> ZipEnumerator<T, TEnumerator, TSecond, std::function<std::pair<T, TSecond>(T, TSecond)>> Zip(TEnumerator<TSecond> second);
+		template <template <typename> class TEnumerator, typename TSecond, typename TFunc> ZipEnumerator<T, TEnumerator, TSecond, TFunc> Zip(TEnumerator<TSecond> second, TFunc transform);
 
 		//ToList, etc...
-		std::list<T> ToList();
-		std::vector<T> ToVector();
-		std::set<T> ToSet();
-		std::multiset<T> ToMultiset();
-		std::unordered_set<T> ToUnorderedSet();
-		std::unordered_multiset<T> ToUnorderedMultiset();
-		std::deque<T> ToDeque();
-		std::stack<T> ToStack();
-		std::queue<T> ToQueue();
-		template <typename TFunc> std::map<decltype(std::declval<TFunc>()(std::declval<T>())), T> ToMap(TFunc func);
-		template <typename TFunc> std::multimap<decltype(std::declval<TFunc>()(std::declval<T>())), T> ToMultimap(TFunc func);
-		template <typename TFunc> std::unordered_map<decltype(std::declval<TFunc>()(std::declval<T>())), T> ToUnorderedMap(TFunc func);
-		template <typename TFunc> std::unordered_multimap<decltype(std::declval<TFunc>()(std::declval<T>())), T> ToUnorderedMultimap(TFunc func);
+		std::list<typename CoreType<T>::Type> ToList();
+		std::vector<typename CoreType<T>::Type> ToVector();
+		std::set<typename CoreType<T>::Type> ToSet();
+		std::multiset<typename CoreType<T>::Type> ToMultiset();
+		std::unordered_set<typename CoreType<T>::Type> ToUnorderedSet();
+		std::unordered_multiset<typename CoreType<T>::Type> ToUnorderedMultiset();
+		std::deque<typename CoreType<T>::Type> ToDeque();
+		std::stack<typename CoreType<T>::Type> ToStack();
+		std::queue<typename CoreType<T>::Type> ToQueue();
+		std::basic_string<typename CoreType<T>::Type> ToString();
+		template <typename TFunc> std::map<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToMap(TFunc func);
+		template <typename TFunc> std::multimap<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToMultimap(TFunc func);
+		template <typename TFunc> std::unordered_map<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToUnorderedMap(TFunc func);
+		template <typename TFunc> std::unordered_multimap<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToUnorderedMultimap(TFunc func);
 
 	private:
-		static void RaiseEmpty();
-		static void RaiseMultiple();
-		static void RaiseIndex();
+		static void RaiseEmpty() __attribute__((noreturn));
+		static void RaiseMultiple() __attribute__((noreturn));
+		static void RaiseIndex() __attribute__((noreturn));
 	};
 
 	//From, etc...
+	template <typename T> IteratorEnumerator<T> From(T first, T last);
 	template <typename T> IteratorEnumerator<typename T::iterator> From(T& container);
 	template <typename T> IteratorEnumerator<typename T::const_iterator> From(const T& container);
 	template <typename T> IteratorEnumerator<typename T::const_iterator> FromConst(const T& container);
@@ -148,11 +158,11 @@ namespace Linq
 	template <typename T> IteratorEnumerator<typename T::const_reverse_iterator> FromConstReverse(const T& container);
 
 	//Range
-	template <typename T> RangeEnumerator<T> Range(T first, unsigned long count);
-	template <typename T> RangeEnumerator<T> Range(T first, unsigned long count, T step);
+	template <typename T> RangeEnumerator<T> Range(T first, std::size_t count);
+	template <typename T> RangeEnumerator<T> Range(T first, std::size_t count, T step);
 
 	//Repeat
-	template <typename T> RepeatEnumerator<T> Repeat(T value, unsigned long count);
+	template <typename T> RepeatEnumerator<T> Repeat(T value, std::size_t count);
 }
 
 #include "Enumerator.inl"

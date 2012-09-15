@@ -22,12 +22,12 @@ namespace Linq
 		typedef typename ManyType::ValueType ValueType;
 		typedef Enumerator<SourceType> SourceInterfaceType;
 		typedef Enumerator<ValueType> InterfaceType;
-	
+
 		SelectManyEnumerator(SourceInterfaceType& iter, FunctionType func)
-			: func(func), iter(iter)
+			: iter(iter), func(func)
 		{
 		}
-	
+
 		bool MoveFirst() override
 		{
 			if (iter.MoveFirst())
@@ -44,7 +44,7 @@ namespace Linq
 			}
 			return false;
 		}
-	
+
 		bool MoveNext() override
 		{
 			if (current->MoveNext())
@@ -57,18 +57,18 @@ namespace Linq
 			}
 			return false;
 		}
-	
+
 		ValueType GetCurrent() const override
 		{
 			return current->GetCurrent();
 		}
-	
+
 	private:
 		SourceInterfaceType& iter;
 		FunctionType func;
 		ManyTypePtr current;
 	};
-	
+
 	template <typename T>
 	template <typename TFunc>
 	inline SelectManyEnumerator<T, TFunc> Enumerator<T>::SelectMany(TFunc func)

@@ -17,37 +17,37 @@ namespace Linq
 		typedef TakeEnumerator<T> ThisType;
 		typedef T ValueType;
 		typedef Enumerator<ValueType> InterfaceType;
-		typedef unsigned long SizeType;
-	
+		typedef std::size_t SizeType;
+
 		TakeEnumerator(InterfaceType& iter, SizeType count)
 			: iter(iter), take(count), count(0)
 		{
 		}
-	
+
 		bool MoveFirst() override
 		{
 			count = 0;
 			return iter.MoveFirst() && count < take;
 		}
-	
+
 		bool MoveNext() override
 		{
 			return iter.MoveNext() && ++count < take;
 		}
-	
+
 		ValueType GetCurrent() const override
 		{
 			return iter.GetCurrent();
 		}
-	
+
 	private:
 		InterfaceType& iter;
 		SizeType take;
 		SizeType count;
 	};
-	
+
 	template <typename T>
-	inline TakeEnumerator<T> Enumerator<T>::Take(unsigned long count)
+	inline TakeEnumerator<T> Enumerator<T>::Take(std::size_t count)
 	{
 		return { *this, count };
 	}
