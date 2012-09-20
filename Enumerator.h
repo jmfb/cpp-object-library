@@ -39,6 +39,8 @@ namespace Linq
 	template <typename T> class IteratorEnumerator;
 	template <typename T> class RangeEnumerator;
 	template <typename T> class RepeatEnumerator;
+	template <typename T, typename TKey, typename TIter> class GroupEnumerator;
+	template <typename T, typename TFunc> class GroupByEnumerator;
 
 	template <typename T>
 	class CoreType
@@ -126,6 +128,10 @@ namespace Linq
 		template <template <typename> class TEnumerator, typename TSecond> ZipEnumerator<T, TEnumerator, TSecond, std::function<std::pair<T, TSecond>(T, TSecond)>> Zip(TEnumerator<TSecond> second);
 		template <template <typename> class TEnumerator, typename TSecond, typename TFunc> ZipEnumerator<T, TEnumerator, TSecond, TFunc> Zip(TEnumerator<TSecond> second, TFunc transform);
 
+		//GroupBy
+		template <typename TFunc>
+		GroupByEnumerator<T, TFunc> GroupBy(TFunc func);
+		
 		//ToList, etc...
 		std::list<typename CoreType<T>::Type> ToList();
 		std::vector<typename CoreType<T>::Type> ToVector();
@@ -179,4 +185,6 @@ namespace Linq
 #include "ConcatEnumerator.inl"
 #include "StaticCastEnumerator.inl"
 #include "ZipEnumerator.inl"
+#include "GroupEnumerator.inl"
+#include "GroupByEnumerator.inl"
 

@@ -55,6 +55,8 @@
 			<File>ConcatEnumerator.inl</File>
 			<File>StaticCastEnumerator.inl</File>
 			<File>ZipEnumerator.inl</File>
+			<File>GroupByEnumerator.inl</File>
+			<File>GroupEnumerator.inl</File>
 			<Folder name="Tests">
 				<File>Enumerator.Test.cpp</File>
 				<File>RepeatEnumerator.Test.cpp</File>
@@ -70,6 +72,24 @@
 				<File>ConcatEnumerator.Test.cpp</File>
 				<File>StaticCastEnumerator.Test.cpp</File>
 				<File>ZipEnumerator.Test.cpp</File>
+				<File>GroupByEnumerator.Test.cpp</File>
+			</Folder>
+		</Folder>
+		<Folder name="Miscellaneous Classes">
+			<Folder name="ReadWriteProperty">
+				<File>Utility\ReadWriteProperty.h</File>
+				<File>Utility\ReadWriteProperty.inl</File>
+				<File>Utility\ReadWriteProperty.Test.cpp</File>
+			</Folder>
+			<Folder name="ReadOnlyProperty">
+				<File>Utility\ReadOnlyProperty.h</File>
+				<File>Utility\ReadOnlyProperty.inl</File>
+				<File>Utility\ReadOnlyProperty.Test.cpp</File>
+			</Folder>
+			<Folder name="WriteOnlyProperty">
+				<File>Utility\WriteOnlyProperty.h</File>
+				<File>Utility\WriteOnlyProperty.inl</File>
+				<File>Utility\WriteOnlyProperty.Test.cpp</File>
 			</Folder>
 		</Folder>
 		<File>main.cpp</File>
