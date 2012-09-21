@@ -125,13 +125,15 @@ namespace Linq
 		T Max();
 
 		//Zip
-		template <template <typename> class TEnumerator, typename TSecond> ZipEnumerator<T, TEnumerator, TSecond, std::function<std::pair<T, TSecond>(T, TSecond)>> Zip(TEnumerator<TSecond> second);
-		template <template <typename> class TEnumerator, typename TSecond, typename TFunc> ZipEnumerator<T, TEnumerator, TSecond, TFunc> Zip(TEnumerator<TSecond> second, TFunc transform);
+		template <template <typename> class TEnumerator, typename TSecond>
+		ZipEnumerator<T, TEnumerator, TSecond, std::function<std::pair<T, TSecond>(T, TSecond)>> Zip(TEnumerator<TSecond> second);
+		template <template <typename> class TEnumerator, typename TSecond, typename TFunc>
+		ZipEnumerator<T, TEnumerator, TSecond, TFunc> Zip(TEnumerator<TSecond> second, TFunc transform);
 
 		//GroupBy
 		template <typename TFunc>
 		GroupByEnumerator<T, TFunc> GroupBy(TFunc func);
-		
+
 		//ToList, etc...
 		std::list<typename CoreType<T>::Type> ToList();
 		std::vector<typename CoreType<T>::Type> ToVector();
@@ -143,10 +145,18 @@ namespace Linq
 		std::stack<typename CoreType<T>::Type> ToStack();
 		std::queue<typename CoreType<T>::Type> ToQueue();
 		std::basic_string<typename CoreType<T>::Type> ToString();
-		template <typename TFunc> std::map<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToMap(TFunc func);
-		template <typename TFunc> std::multimap<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToMultimap(TFunc func);
-		template <typename TFunc> std::unordered_map<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToUnorderedMap(TFunc func);
-		template <typename TFunc> std::unordered_multimap<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToUnorderedMultimap(TFunc func);
+
+		template <typename TFunc>
+		std::map<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToMap(TFunc func);
+
+		template <typename TFunc>
+		std::multimap<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToMultimap(TFunc func);
+
+		template <typename TFunc>
+		std::unordered_map<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToUnorderedMap(TFunc func);
+
+		template <typename TFunc>
+		std::unordered_multimap<decltype(std::declval<TFunc>()(std::declval<T>())), typename CoreType<T>::Type> ToUnorderedMultimap(TFunc func);
 
 	private:
 		static void RaiseEmpty() __attribute__((noreturn));
