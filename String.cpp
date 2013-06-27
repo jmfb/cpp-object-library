@@ -1,4 +1,4 @@
-#include "String.h"
+#include "String2.h"
 #include <string>
 
 namespace ObjectLibrary
@@ -12,7 +12,7 @@ namespace ObjectLibrary
 		}
 		std::string value;
 	};
-	
+
 	String::String()
 		: data(new Data())
 	{
@@ -29,7 +29,7 @@ namespace ObjectLibrary
 	{
 		delete data;
 	}
-	
+
 	String& String::operator=(const String& rhs)
 	{
 		if (this != &rhs)
@@ -50,7 +50,7 @@ namespace ObjectLibrary
 	{
 		return *this;
 	}
-	
+
 	const char* String::GetData() const
 	{
 		return data->value.c_str();

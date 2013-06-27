@@ -30,7 +30,7 @@
 		<Folder name="Object Hierarchy">
 			<File>Object.h</File>
 			<File>Object.cpp</File>
-			<File>String.h</File>
+			<File>String2.h</File>
 			<File>String.cpp</File>
 			<File>SingleEndedCollection.h</File>
 			<File>FrontEndedCollection.h</File>

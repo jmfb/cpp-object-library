@@ -24,7 +24,7 @@ namespace Linq
 	{
 		if (!MoveFirst())
 			RaiseEmpty();
-		auto first = GetCurrent();
+		auto&& first = GetCurrent();
 		if (MoveNext())
 			RaiseMultiple();
 		return first;
@@ -48,7 +48,7 @@ namespace Linq
 	{
 		if (!MoveFirst())
 			return def;
-		auto first = GetCurrent();
+		auto&& first = GetCurrent();
 		if (MoveNext())
 			RaiseMultiple();
 		return first;
@@ -118,7 +118,7 @@ namespace Linq
 			RaiseEmpty();
 		for (;;)
 		{
-			auto last = GetCurrent();
+			auto&& last = GetCurrent();
 			if (!MoveNext())
 				return last;
 		}
@@ -144,7 +144,7 @@ namespace Linq
 			return def;
 		for (;;)
 		{
-			auto last = GetCurrent();
+			auto&& last = GetCurrent();
 			if (!MoveNext())
 				return last;
 		}

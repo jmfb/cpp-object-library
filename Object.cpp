@@ -1,5 +1,5 @@
 #include "Object.h"
-#include "String.h"
+#include "String2.h"
 
 namespace ObjectLibrary
 {
