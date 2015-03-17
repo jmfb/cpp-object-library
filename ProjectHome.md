@@ -1,0 +1,1 @@
+Support classes for writing object libraries in C++ that contain compile time metadata, C style API export, and generated Interface/Class wrapper import support.
